@@ -1,17 +1,23 @@
 // const audio = document.querySelector("audio");
 const playBtn = document.querySelector(".play-btn");
 const pauseBtn = document.querySelector(".pause-btn");
-const togBtn = document.querySelector(".toggleBtn");
+const togBtn = document.querySelector(".toggle-Btn");
+const nextBtn = document.querySelector(".next-btn");
+const prevBtn = document.querySelector(".prev-btn");
+let playNum = 0;
+const playList = [
+  "./assets/audio/Rammstein - Du hast.mp3",
+  "./assets/audio/Scatman John – Scatman (Ski-Ba-Bop-Ba-Dop-Bop).mp3",
+  "./assets/audio/01-odinokiy-pastu-01-odinokiy-pastuh.mp3",
+];
 
 const audio = new Audio();
 let isPlay = false;
-audio.src = "./assets/audio/01-odinokiy-pastu-01-odinokiy-pastuh.mp3";
+audio.src = playList[playNum];
 
 function playAudio() {
   if (!isPlay) {
-    console.log(audio.currentTime);
     audio.currntTime = 0;
-    console.log(audio.currentTime);
     audio.play();
     isPlay = true;
     togBtn.classList.add("pause");
@@ -29,9 +35,7 @@ function pauseAudio() {
 
 function toggleBtn() {
   if (!isPlay) {
-    console.log(audio.currentTime);
     audio.currntTime = 0;
-    console.log(audio.currentTime);
     audio.play();
     isPlay = true;
     togBtn.classList.add("pause");
@@ -41,6 +45,30 @@ function toggleBtn() {
   }
 }
 
+function playNext() {
+  playNum++;
+  if (playNum > playList.length - 1) {
+    playNum = 0;
+  }
+  audio.src = playList[playNum];
+  audio.currntTime = 0;
+  pauseAudio();
+  playAudio();
+}
+
+function playPrev() {
+  playNum--;
+  if (playNum < 0) {
+    playNum = playList.length - 1;
+  }
+  audio.src = playList[playNum];
+  audio.currntTime = 0;
+  pauseAudio();
+  playAudio();
+}
+
 playBtn.addEventListener("click", playAudio);
 pauseBtn.addEventListener("click", pauseAudio);
 togBtn.addEventListener("click", toggleBtn);
+nextBtn.addEventListener("click", playNext);
+prevBtn.addEventListener("click", playPrev);
